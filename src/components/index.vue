@@ -1,7 +1,7 @@
 <script>
 import highlightChunks from './highlightChunks';
 
-const classAndStyleTypes = [Object, Array, String];
+const classAndStyleTypes = [Object, Array, String, Function];
 
 export default {
   name: 'text-highlight',
@@ -38,12 +38,13 @@ export default {
           text,
           isHighlighted,
           highlightIndex,
+          queryIndex,
         }) => (
           !isHighlighted
             ? text
             : <this.highlightComponent
-              class={['text__highlight', this.highlightClass]}
-              style={this.highlightStyle}
+              class={['text__highlight', this.getByIndex(this.highlightClass, queryIndex)]}
+              style={this.getByIndex(this.highlightStyle, queryIndex)}
               key={highlightIndex}
               index={highlightIndex}
               text={text}
@@ -57,6 +58,12 @@ export default {
   beforeMount() { this.setTextFromSlot(); },
   beforeUpdate() { this.setTextFromSlot(); },
   methods: {
+    getByIndex(highlightOption, queryIndex) {
+      if (typeof highlightOption === 'function') {
+        return highlightOption(queryIndex);
+      }
+      return highlightOption;
+    },
     setTextFromSlot() {
       const defaultSlot = this.$slots.default;
 

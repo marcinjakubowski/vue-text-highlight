@@ -13,6 +13,7 @@
       <text-highlight
         :queries="queries"
         :highlightComponent="highlightComponent"
+        :highlightStyle="getStyle"
         @enter="setActiveIndex"
         @leave="unsetActiveIndex"
         :activeIndex="activeIndex"
@@ -27,6 +28,7 @@
       <text-highlight
         :queries="queries"
         :highlightComponent="highlightComponent"
+        :highlightStyle="getStyle"
         @enter="setActiveIndex"
         @leave="unsetActiveIndex"
         :activeIndex="activeIndex"
@@ -40,6 +42,7 @@
     <div class="html">
       <text-highlight
         :queries="queries"
+        :highlightStyle="getStyle"
         :highlightComponent="highlightComponent"
         @enter="setActiveIndex"
         @leave="unsetActiveIndex"
@@ -57,6 +60,23 @@
 import TextHighlight from 'vue-text-highlight';
 import CustomHighlightComponent from './CustomHighlightComponent';
 import { texts, html } from '../assets/data';
+
+const HIGHLIGHTS = ['#95eadc',
+  '#e1b0dd',
+  '#9dc58e',
+  '#74aff3',
+  '#d8ebb4',
+  '#bcb8ec',
+  '#b2ecc5',
+  '#edaab4',
+  '#73d3df',
+  '#e8b594',
+  '#7cc9ef',
+  '#d3c896',
+  '#a2bfe9',
+  '#8dc7ab',
+  '#8dc3b8',
+];
 
 export default {
   props: {
@@ -96,6 +116,9 @@ export default {
     },
   },
   methods: {
+    getStyle(queryIndex) {
+      return this.split ? `background-color: ${HIGHLIGHTS[queryIndex % HIGHLIGHTS.length]}` : '';
+    },
     setActiveIndex(index) {
       this.activeIndex = index;
     },

@@ -18,8 +18,11 @@ export default function highlightChunks(
 
   const matches = [];
 
-  queries.forEach((query) => {
+  queries.forEach((query, index) => {
     matches.push(...indicesOf(text, query, { caseSensitive, diacriticsSensitive }));
+    matches.forEach((arr) => {
+      arr.push(index);
+    });
   });
 
   const highlights = mergeRange(matches);
@@ -27,7 +30,7 @@ export default function highlightChunks(
   const chunks = [];
   let lastEnd = 0;
 
-  highlights.forEach(([start, end], index) => {
+  highlights.forEach(([start, end, queryIndex], index) => {
     if (lastEnd !== start) {
       chunks.push({
         isHighlighted: false,
@@ -38,6 +41,7 @@ export default function highlightChunks(
       isHighlighted: true,
       text: text.slice(start, end),
       highlightIndex: index,
+      queryIndex,
     });
 
     lastEnd = end;
