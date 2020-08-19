@@ -40,13 +40,23 @@
               class="checkBox">Diacritics sensitive</check-box>
           </div>
         </div>
+        <div class="row">
+          <div class="column">
+            <check-box
+              :defaultValue="mergeHighlights"
+              @onchange="updateMergeHighlights"
+              class="checkBox">Merge highlights</check-box>
+          </div>
+        </div>
       </div>
       <example-document
         :search="search"
         :split="split"
         :custom="custom"
         :caseSensitive="caseSensitive"
-        :diacriticsSensitive="diacriticsSensitive"></example-document>
+        :diacriticsSensitive="diacriticsSensitive"
+        :mergeHighlights="mergeHighlights"
+      ></example-document>
     </div>
   </div>
 </template>
@@ -74,9 +84,13 @@ export default {
       custom: false,
       caseSensitive: false,
       diacriticsSensitive: false,
+      mergeHighlights: true,
     };
   },
   methods: {
+    updateMergeHighlights(val) {
+      this.mergeHighlights = val;
+    },
     updateSearch(e) {
       this.search = e.target.value;
     },

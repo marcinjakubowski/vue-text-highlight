@@ -1,9 +1,9 @@
-import { indicesOf, mergeRange } from '../utils';
+import { indicesOf, mergeRange, separateRange } from '../utils';
 
 export default function highlightChunks(
   text,
   queriesOrQuery,
-  { caseSensitive = false, diacriticsSensitive = false } = {},
+  { caseSensitive = false, diacriticsSensitive = false, mergeHighlights = true } = {},
 ) {
   let queries = queriesOrQuery;
   if (typeof queriesOrQuery === 'string' || queriesOrQuery instanceof RegExp) {
@@ -19,13 +19,14 @@ export default function highlightChunks(
   const matches = [];
 
   queries.forEach((query, index) => {
-    matches.push(...indicesOf(text, query, { caseSensitive, diacriticsSensitive }));
-    matches.forEach((arr) => {
+    const results = indicesOf(text, query, { caseSensitive, diacriticsSensitive });
+    results.forEach((arr) => {
       arr.push(index);
     });
+    matches.push(...results);
   });
 
-  const highlights = mergeRange(matches);
+  const highlights = mergeHighlights ? mergeRange(matches) : separateRange(matches);
 
   const chunks = [];
   let lastEnd = 0;

@@ -1,4 +1,4 @@
-export default function mergeRange([...ranges]) {
+export default function separateRange([...ranges]) {
   if (!ranges.length) return [];
 
   ranges.sort((fir, sec) => {
@@ -8,19 +8,17 @@ export default function mergeRange([...ranges]) {
 
   const merged = [];
 
-  let curStart = ranges[0][0];
-  let curEnd = ranges[0][1];
+  let curStart = ranges[0][0]; // 1, 4
+  let curEnd = ranges[0][1]; // 5, 8
   let ix = ranges[0][2];
 
   ranges.shift();
 
   ranges.forEach(([start, end, index]) => {
-    if (start >= curEnd) {
-      merged.push([curStart, curEnd, ix]);
-      curStart = start;
-      curEnd = end;
-      ix = index;
-    } else if (end > curEnd) curEnd = end;
+    merged.push([curStart, curEnd, ix]);
+    curStart = start < curEnd ? curEnd : start;
+    curEnd = end;
+    ix = index;
   });
 
   merged.push([curStart, curEnd, ix]);

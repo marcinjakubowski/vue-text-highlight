@@ -108,6 +108,52 @@ describe('<text-higlight>', () => {
     expect(nodes.length).toEqual(2);
   });
 
+  test('should allow distinct style per query', () => {
+    const text = 'test text as default slot';
+    const queries = ['test', 'slot'];
+    const highlightStyle = (index) => {
+      return `background-color: ${index == 0 ? 'red' : 'green'}`;
+    };
+
+    const wrapper = mount(TextHighlight, {
+      propsData: {
+        queries,
+        highlightStyle,
+      },
+      slots: {
+        default: text,
+      },
+    });
+
+    const nodes = wrapper.vm.$el.querySelectorAll('.text__highlight');
+
+    expect(nodes[0].style.backgroundColor).toEqual('red');
+    expect(nodes[1].style.backgroundColor).toEqual('green');
+  });
+
+  test('should allow distinct class per query', () => {
+    const text = 'test text as default slot';
+    const queries = ['test', 'slot'];
+    const highlightClass = (index) => {
+      return index == 0 ? 'red' : 'green';
+    };
+
+    const wrapper = mount(TextHighlight, {
+      propsData: {
+        queries,
+        highlightClass,
+      },
+      slots: {
+        default: text,
+      },
+    });
+
+    const nodes = wrapper.vm.$el.querySelectorAll('.text__highlight');
+
+    expect(nodes[0].classList.value).toContain('red');
+    expect(nodes[1].classList.value).toContain('green');
+  });
+
   test('should match correctly using regex', () => {
     const text = 'test text as default slot';
     const queries = [/te.t/, 'ault'];

@@ -9,6 +9,10 @@ export default {
     queries: [Array, String, RegExp],
     caseSensitive: Boolean,
     diacriticsSensitive: Boolean,
+    mergeHighlights: {
+      type: Boolean,
+      default: true,
+    },
     highlightStyle: classAndStyleTypes,
     highlightClass: classAndStyleTypes,
     highlightComponent: {
@@ -90,8 +94,9 @@ export default {
         queries,
         caseSensitive,
         diacriticsSensitive,
+        mergeHighlights,
       } = this;
-      return highlightChunks(text, queries, { caseSensitive, diacriticsSensitive });
+      return highlightChunks(text, queries, { caseSensitive, diacriticsSensitive, mergeHighlights });
     },
   },
 };

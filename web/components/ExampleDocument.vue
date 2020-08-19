@@ -20,6 +20,7 @@
         :displayHoverMe="true"
         :caseSensitive="caseSensitive"
         :diacriticsSensitive="diacriticsSensitive"
+        :mergeHighlights="mergeHighlights"
       >
         {{ textEnglish }}
       </text-highlight>
@@ -35,6 +36,7 @@
         :displayHoverMe="true"
         :caseSensitive="caseSensitive"
         :diacriticsSensitive="diacriticsSensitive"
+        :mergeHighlights="mergeHighlights"
       >
         {{ textSpanish }}
       </text-highlight>
@@ -49,6 +51,7 @@
         :activeIndex="activeIndex"
         :caseSensitive="caseSensitive"
         :diacriticsSensitive="diacriticsSensitive"
+        :mergeHighlights="mergeHighlights"
       >
         {{ html }}
       </text-highlight>
@@ -85,6 +88,7 @@ export default {
     custom: Boolean,
     caseSensitive: Boolean,
     diacriticsSensitive: Boolean,
+    mergeHighlights: Boolean,
   },
   components: {
     TextHighlight,
